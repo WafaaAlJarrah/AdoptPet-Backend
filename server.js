@@ -21,8 +21,8 @@ app.use(historyRouter);
 connectToDB()
   .then(() => {
     console.log("Connected to Mongoose");
-    app.listen(5000, () => {
-      console.log("listening on port 5000...");
+    app.listen(3000, () => {
+      console.log("listening on port 3000...");
     });
   })
   .catch((err) => console.log(err));

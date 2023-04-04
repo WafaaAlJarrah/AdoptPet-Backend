@@ -24,8 +24,8 @@ historyRouter.get("/history", async (req, res) => {
         path: "sender",
       },
     });
-  console.log("get is running");
-  res.send("this my list : " + histories);
+  console.log("get is running from backend project");
+  res.send("from backend project, this my list : " + histories);
 });
 
 historyRouter.post("/history", async (req, res) => {
