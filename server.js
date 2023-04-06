@@ -1,11 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
-import animalRouter from "./src/routes/animalRouter/index.js";
+import animalRouter from "./src/Routes/animalRouter/index.js";
 import { connectToDB } from "./db-connection.js";
-import userRouter from "./src/routes/userRouter/index.js";
-import specificationRouter from "./src/routes/specificationRouter/index.js";
-import requestRouter from "./src/routes/requestRouter/index.js";
-import historyRouter from "./src/routes/historyRouter/index.js";
+import userRouter from "./src/Routes/userRouter/index.js";
+import specificationRouter from "./src/Routes/specificationRouter/index.js";
+import requestRouter from "./src/Routes/requestRouter/index.js";
+import historyRouter from "./src/Routes/historyRouter/index.js";
 const app = express();
 
 //jsonParser to allow server accept body from request
