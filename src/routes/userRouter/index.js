@@ -1,5 +1,5 @@
 import express from "express";
-import { User } from "../../model/userModel/index.js";
+import { User } from "../../Models/userModel/index.js";
 import bcrypt from "bcrypt";
 const userRouter = express.Router();
 // userRouter.get("/user/login", async (req, res) => {

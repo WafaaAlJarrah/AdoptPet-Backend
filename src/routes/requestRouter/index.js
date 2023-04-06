@@ -1,5 +1,5 @@
 import express from "express";
-import { Request } from "../../model/requestModel/index.js";
+import { Request } from "../../Models/requestModel/index.js";
 
 const requestRouter = express.Router();
 requestRouter.get("/request/", async (req, res) => {

@@ -1,5 +1,5 @@
 import express from "express";
-import { Specification } from "../../model/specificationModel/index.js";
+import { Specification } from "../../Models/specificationModel/index.js";
 
 const specificationRouter = express.Router();
 

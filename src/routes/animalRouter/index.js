@@ -1,5 +1,5 @@
 import express from "express";
-import { Animal } from "../../model/animalModel/index.js";
+import { Animal } from "../../Models/animalModel/index.js";
 
 const animalRouter = express.Router();
 animalRouter.get("/animal/", async (req, res) => {
