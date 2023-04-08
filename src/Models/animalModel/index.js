@@ -1,15 +1,27 @@
 import mongoose, { Schema } from "mongoose";
 
-const animalsSchema = new Schema({
-  name: String,
-  image: { type: Schema.Types.ObjectId, ref: "Image" },
-  age: Number,
-  type: String, //dog or cat
-  gender: String, //male or female
-  color: String,
-  location: String,
-  description: String,
-  specification: { type: Schema.Types.ObjectId, ref: "Specification" }, // from specifictions table => get the name of the schema reference
-  budget: Number, //pourcentage
-});
+const animalsSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    image: { type: Schema.Types.ObjectId, ref: "Image" },
+    age: { type: Number, required: true },
+    type: { type: String, required: true }, //dog or cat
+    gender: { type: String, required: true }, //male or female
+    color: { type: String, required: true },
+    location: String,
+    description: { type: String, required: true },
+    specification: {
+        type: String,
+        required: true,
+      },
+    // specification: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Specification",
+    //   required: true,
+    // }, // from specifictions table => get the name of the schema reference
+    budget: Number, //pourcentage
+    likes: [], //table of users ID
+  },
+  { timestamps: true }
+);
 export const Animal = mongoose.model("Animal", animalsSchema);
