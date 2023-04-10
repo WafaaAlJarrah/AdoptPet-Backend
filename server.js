@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 import { connectToDB } from "./db-connection.js";
 import specificationRouter from "./src/Routes/specificationRouter/index.js";
 import requestRouter from "./src/Routes/requestRouter/index.js";
@@ -13,7 +14,7 @@ const app = express();
 
 //Middleware
 app.use(bodyParser.json()); //jsonParser to allow server accept body from request
-
+app.use(cors());
 app.use(specificationRouter);
 app.use(requestRouter);
 app.use(historyRouter);
