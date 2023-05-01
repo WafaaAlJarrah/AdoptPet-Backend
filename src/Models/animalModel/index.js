@@ -10,15 +10,15 @@ const animalsSchema = new Schema(
     color: { type: String, required: true },
     location: String,
     description: { type: String, required: true },
-    specification: {
-        type: String,
-        required: true,
-      },
     // specification: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "Specification",
-    //   required: true,
-    // }, // from specifictions table => get the name of the schema reference
+    //     type: String,
+    //     required: true,
+    //   },
+    specification: {
+      type: Schema.Types.ObjectId,
+      ref: "Specification",
+      required: true,
+    }, // from specifictions table => get the name of the schema reference
     budget: Number, //pourcentage
     likes: [], //table of users ID
   },

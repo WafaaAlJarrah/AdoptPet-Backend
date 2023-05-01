@@ -1,5 +1,8 @@
 import { User } from "../Models/userModel/index.js";
+import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
+import Jwt from "jsonwebtoken";
+import { EMAIL, PASSWORD } from "../env.js";
 
 //registering a new User
 export const registerUser = async (req, res) => {
@@ -7,17 +10,60 @@ export const registerUser = async (req, res) => {
   const hashPass = await bcrypt.hash(req.body.password, saltRounds);
   req.body.password = hashPass;
   const newUser = new User(req.body);
-  const { email } = newUser.email;
+
+  const { email, fullName } = req.body;
   try {
-    const oldUser = User.findOne({ email });
+    const oldUser = await User.findOne({ email: email });
     if (oldUser) {
-      return res.json({ message: "Email already registered" });
+      return res.status(400).json({ message: "Email already registered" });
     }
-    await newUser.save();
-    res.json(newUser); //res.Status(200).json(newUser); // 200 => OK
+
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: EMAIL,
+        pass: PASSWORD,
+      },
+    });
+
+    let message = {
+      from: `"Adopt Pet Platform" <${EMAIL}>`, // sender address
+      to: req.body.email, // list of receivers
+      subject: "Please confirm your account ✔", // Subject line
+      html: `<h1>Email Confirmation</h1>
+         <h2>Hello ${fullName}</h2>
+         <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
+         <a href=http://localhost:3000/auth/login> Click here</a>
+         </div>`, // html body
+    };
+
+    transporter
+      .sendMail(message)
+      .then(async (info) => {
+        const user = await newUser.save();
+        const token = Jwt.sign(
+          {
+            email: user.email,
+            id: user._id,
+          },
+          "MERN",
+          { expiresIn: "1h" }
+        );
+        return res.status(201).json({
+          msg: "you should receive an email",
+          info: info.messageId,
+          preview: nodemailer.getTestMessageUrl(info),
+          newUser: newUser,
+        });
+      })
+      .catch((error) => {
+        return res
+          .status(500)
+          .json({ message: "ERROR from transporter: ", error });
+      });
   } catch (error) {
-    res.json({ message: error.message }); //500 => Internal Server Error
-    //res.Status(500).json({ message: error.message }); /
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -30,11 +76,23 @@ export const loginUser = async (req, res) => {
     if (user) {
       const validity = await bcrypt.compare(password, user.password);
 
-      validity ? res.json(user) : res.json("Wrong Password!"); //status(200) or status(400)
+      if (!validity) {
+        res.status(400).json("Wrong Password");
+      } else {
+        const token = Jwt.sign(
+          {
+            email: user.email,
+            id: user._id,
+          },
+          "MERN",
+          { expiresIn: "1h" }
+        );
+        res.status(200).json("User logged in");
+      }
     } else {
-      res.json("User doesn't exists!"); // status(404)
+      res.status(404).json("User doesn't exists!");
     }
   } catch (error) {
-    res.json({ message: error.message }); //status(500)
+    res.status(500).json({ message: error.message });
   }
 };
