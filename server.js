@@ -15,7 +15,6 @@ const app = express();
 //Middleware
 app.use(bodyParser.json()); //jsonParser to allow server accept body from request
 app.use(cors());
-
 //Connection
 connectToDB()
   .then(() => {
@@ -33,4 +32,3 @@ app.use("/animal", AnimalRoute);
 app.use("/specification", SpecificationRoute);
 app.use("/request", RequestRoute);
 app.use("/history", HistoryRoute);
-

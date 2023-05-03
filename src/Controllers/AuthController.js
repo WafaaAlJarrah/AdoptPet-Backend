@@ -30,11 +30,11 @@ export const registerUser = async (req, res) => {
     let message = {
       from: `"Adopt Pet Platform" <${EMAIL}>`, // sender address
       to: req.body.email, // list of receivers
-      subject: "Please confirm your account ✔", // Subject line
-      html: `<h1>Email Confirmation</h1>
+      subject: "Welcome to our platform", // Subject line
+      html: `<h1>Email Confirmation ✔</h1>
          <h2>Hello ${fullName}</h2>
          <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-         <a href=http://localhost:3000/auth/login> Click here</a>
+         <a href=http://localhost:3000/Login> Click here</a>
          </div>`, // html body
     };
 
@@ -61,6 +61,12 @@ export const registerUser = async (req, res) => {
         return res
           .status(500)
           .json({ message: "ERROR from transporter: ", error });
+          // if you have tihs error try this way :
+          //1. Go to your Google account at https://myaccount.google.com/
+          //2. Go to Security
+          //3. In "Signing in to Google" section choose 2-Step Verification - here you have to verify yourself
+          //4. choose "App passwords", from the Select app drop down choose Mail (* your google account) and from the Select app drop down choose my Windows Computer
+          //and now generate a new password that you can use it in your code with the your Mail (* your google account)
       });
   } catch (error) {
     res.status(500).json({ message: error.message });
