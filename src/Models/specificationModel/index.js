@@ -2,8 +2,9 @@ import mongoose, { Schema } from "mongoose";
 
 const specificationsSchema = new Schema(
   {
-    name: String,
-    animalType: [String], //dog or cat or both // !!!! most be an array of string
+    name: { type: String, required: true },
+    image: String,
+    animalType: { type: String, required: true }, //dog or cat or both
   },
   { timestamps: true }
 );

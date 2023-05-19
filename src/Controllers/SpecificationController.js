@@ -5,18 +5,19 @@ export const addSpecification = async (req, res) => {
   const newSpecification = new Specification(req.body);
   try {
     await newSpecification.save();
-    res.json("Specification added successfully!"); //status(200)
+    res.status(200).json(newSpecification);
   } catch (error) {
-    res.json(error); //status(500)
+    res.status(500).json(error);
   }
 };
+
 //get all specifications for specific type dogs or cats
 export const allSpecifications = async (req, res) => {
   const type = req.params.type;
   try {
     const specifications = await Specification.find({ animalType: type });
-    res.json(specifications); //status(200)
+    res.status(200).json(specifications);
   } catch (error) {
-    res.json(error); //status(500)
+    res.status(500).json(error);
   }
 };

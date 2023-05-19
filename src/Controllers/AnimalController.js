@@ -5,7 +5,7 @@ export const addAnimal = async (req, res) => {
   const newAnimal = new Animal(req.body);
   try {
     await newAnimal.save();
-    res.status(200).json("Animal added successfully!"); //status(200)
+    res.status(200).json(newAnimal); //status(200)
   } catch (error) {
     res.status(500).json(error); //status(500)
   }

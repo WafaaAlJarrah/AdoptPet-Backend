@@ -12,11 +12,13 @@ specificationRouter.get("/specification", async (req, res) => {
 export default specificationRouter;
 
 specificationRouter.post("/specification", async (req, res) => {
-    const { name, animalType} = req.body;
-    const newSpecification =new Specification({
-        name, 
-        animalType,
-    });
+  const newSpecification = new Specification(req.body);
+    // const { name, animalType} = req.body;
+    // const newSpecification =new Specification({
+    //     name, 
+    //     animalType,
+
+    // });
     await newSpecification.save();
     console.log("get is running");
     res.send("this my list : " + newSpecification);

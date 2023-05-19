@@ -8,7 +8,7 @@ import AnimalRoute from "./src/Routes/AnimalRoute.js";
 import SpecificationRoute from "./src/Routes/SpecificationRoute.js";
 import RequestRoute from "./src/Routes/RequestRoute.js";
 import HistoryRoute from "./src/Routes/HistoryRoute.js";
-
+import UploadRoute from "./src/Routes/UploadRoute.js";
 //Routes
 const app = express();
 
@@ -32,3 +32,4 @@ app.use("/animal", AnimalRoute);
 app.use("/specification", SpecificationRoute);
 app.use("/request", RequestRoute);
 app.use("/history", HistoryRoute);
+app.use("/upload", UploadRoute);

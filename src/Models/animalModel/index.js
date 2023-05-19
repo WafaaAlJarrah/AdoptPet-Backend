@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const animalsSchema = new Schema(
   {
     name: { type: String, required: true },
-    image: { type: Schema.Types.ObjectId, ref: "Image" },
+    image: String,
     age: { type: Number, required: true },
     type: { type: String, required: true }, //dog or cat
     gender: { type: String, required: true }, //male or female
@@ -17,7 +17,7 @@ const animalsSchema = new Schema(
     specification: {
       type: Schema.Types.ObjectId,
       ref: "Specification",
-      required: true,
+      required: false,
     }, // from specifictions table => get the name of the schema reference
     budget: Number, //pourcentage
     likes: [], //table of users ID
