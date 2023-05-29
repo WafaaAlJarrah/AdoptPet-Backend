@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Animal } from "../Models/animalModel/index.js";
 
 //add new animal
@@ -15,9 +16,10 @@ export const addAnimal = async (req, res) => {
 export const getAnimal = async (req, res) => {
   const id = req.params.id;
   try {
-    const animal = await Animal.findById(id)
-    .populate({ path: 'specification', select: 'name' })
-    .populate({ path: 'image', select: 'type' });
+    const animal = await Animal.findById(id).populate({
+      path: "specification",
+      select: "name",
+    });
     //get nb of likes
     const likes = animal.likes.length;
     console.log("nb: ", likes);
@@ -30,21 +32,27 @@ export const getAnimal = async (req, res) => {
 //get animals
 export const getAnimals = async (req, res) => {
   try {
-    const animals = await Animal.find()
-    .populate({ path: 'specification', select: 'name' })
-    .populate({ path: 'image', select: 'type' });
+    const animals = await Animal.find().populate({
+      path: "specification",
+      select: "name",
+    });
     res.status(200).json(animals); //status(200)
   } catch (error) {
     res.status(500).json(error); //status(500)
   }
 };
 
-//get animal by specification selected
+//get animals by specification selected
 export const getAnimalsBySpecification = async (req, res) => {
   const specificationId = req.params.specificationId;
   console.log(specificationId);
   try {
-    const animals = await Animal.find({ specification: specificationId });
+    const animals = await Animal.find({
+      specification: specificationId,
+    }).populate({
+      path: "specification",
+      select: "name",
+    });
     res.status(200).json(animals); //status(200)
   } catch (error) {
     res.status(500).json(error); //status(500)
@@ -65,6 +73,23 @@ export const updateAnimal = async (req, res) => {
   }
 };
 
+//archive an animal
+export const archiveAnimal = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const archivedAnimal = await Animal.findById(id);
+    if (!archivedAnimal) {
+      return res.status(404).json({ error: "Animal not found" });
+    }
+    archivedAnimal.archived = true;
+    await archivedAnimal.save();
+    res.status(200).json("Animal archieved successfully"); //status(200)
+  } catch (error) {
+    res.status(500).json(error); //status(500)
+  }
+};
+
 //delete aniaml
 export const deleteAnimal = async (req, res) => {
   const id = req.params.id;
@@ -77,7 +102,7 @@ export const deleteAnimal = async (req, res) => {
   }
 };
 
-//like and dislike post
+//like and dislike animal
 export const likeAnimal = async (req, res) => {
   const id = req.params.id;
   const { userId } = req.body;

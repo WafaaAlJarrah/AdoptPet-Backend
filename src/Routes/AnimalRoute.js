@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addAnimal,
+  archiveAnimal,
   deleteAnimal,
   getAnimal,
   getAnimals,
@@ -14,9 +15,10 @@ const AnimalRoute = express.Router();
 AnimalRoute.post("/", addAnimal);
 AnimalRoute.get("/:id", getAnimal);
 AnimalRoute.get("/", getAnimals);
-AnimalRoute.get("/:specificationId", getAnimalsBySpecification);
+AnimalRoute.get("/specification/:specificationId", getAnimalsBySpecification);
 AnimalRoute.put("/:id", updateAnimal);
-AnimalRoute.delete("/:id", deleteAnimal);
+AnimalRoute.delete("/delete/:id", deleteAnimal);
+AnimalRoute.put("/archive/:id", archiveAnimal);
 AnimalRoute.put("/:id/like", likeAnimal);
 // AnimalRoute.get("/", bestAnimals);
 

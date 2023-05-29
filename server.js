@@ -9,8 +9,14 @@ import SpecificationRoute from "./src/Routes/SpecificationRoute.js";
 import RequestRoute from "./src/Routes/RequestRoute.js";
 import HistoryRoute from "./src/Routes/HistoryRoute.js";
 import UploadRoute from "./src/Routes/UploadRoute.js";
+import path from "path";
+// import { fileURLToPath } from "url";
+// import path, { dirname } from "path";
 //Routes
 const app = express();
+//to serve image for public
+const __dirname = path.resolve();
+app.use("/public", express.static(path.join(__dirname, "src", "public")));
 
 //Middleware
 app.use(bodyParser.json()); //jsonParser to allow server accept body from request
