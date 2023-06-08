@@ -13,10 +13,10 @@ import {
 const AnimalRoute = express.Router();
 
 AnimalRoute.post("/", addAnimal);
-AnimalRoute.get("/:id", getAnimal);
+AnimalRoute.get("/animalDetails/:animalId", getAnimal);
 AnimalRoute.get("/", getAnimals);
 AnimalRoute.get("/specification/:specificationId", getAnimalsBySpecification);
-AnimalRoute.put("/:id", updateAnimal);
+AnimalRoute.put("/updateAnimal/:id", updateAnimal);
 AnimalRoute.delete("/delete/:id", deleteAnimal);
 AnimalRoute.put("/archive/:id", archiveAnimal);
 AnimalRoute.put("/:id/like", likeAnimal);

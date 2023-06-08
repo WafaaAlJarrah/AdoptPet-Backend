@@ -12,6 +12,7 @@ const requestsSchema = new Schema(
     // animalName: String, //animal.name
     // animalDescrp: String, // animal.description
     // animalBudget: Number, //animal.budget
+    archived: { type: Boolean, required: true, default: false },
   },
   { timestamps: true }
 );

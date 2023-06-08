@@ -24,6 +24,7 @@ const animalsSchema = new Schema(
     likes: [], //table of users ID
     archived: {
       type: Boolean,
+      required: true,
       default: false,
     },
   },

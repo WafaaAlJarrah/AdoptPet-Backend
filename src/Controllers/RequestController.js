@@ -17,10 +17,27 @@ export const getRequests = async (req, res) => {
   try {
     const Requests = await Request.find()
       .populate({ path: "sender", select: 'fullName email'})
-      .populate("animal");
+      .populate({path:"animal", populate: { path: "specification", select: '_id name'}}); 
     res.json(Requests); //status(200)
   } catch (error) {
     res.json(error); //status(500)
+  }
+};
+
+//archive a request
+export const archiveRequest = async (req, res) => {
+  const requestId = req.params.requestId;
+
+  try {
+    const archivedRequest = await Request.findById(requestId);
+    if (!archivedRequest) {
+      return res.status(404).json({ error: "Request not found" });
+    }
+    archivedRequest.archived = true;
+    await archivedRequest.save();
+    res.status(200).json("Request archieved successfully"); //status(200)
+  } catch (error) {
+    res.status(500).json(error); //status(500)
   }
 };
 
