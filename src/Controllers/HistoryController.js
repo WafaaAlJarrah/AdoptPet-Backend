@@ -5,7 +5,7 @@ export const addHistory = async (req, res) => {
   const newHistory = new History(req.body);
   try {
     await newHistory.save();
-    res.json("History added successfully!"); //status(200)
+    res.json(newHistory); //status(200)
   } catch (error) {
     res.json(error); //status(500)
   }

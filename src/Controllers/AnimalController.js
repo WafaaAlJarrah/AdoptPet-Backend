@@ -67,7 +67,7 @@ export const updateAnimal = async (req, res) => {
     const animalUpdated = await Animal.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    res.status(200).json("Animal updated successfully"); //status(200)
+    res.status(200).json(animalUpdated); //status(200)
   } catch (error) {
     res.status(500).json(error); //status(500)
   }

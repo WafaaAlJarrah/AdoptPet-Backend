@@ -16,8 +16,11 @@ export const addRequest = async (req, res) => {
 export const getRequests = async (req, res) => {
   try {
     const Requests = await Request.find()
-      .populate({ path: "sender", select: 'fullName email'})
-      .populate({path:"animal", populate: { path: "specification", select: '_id name'}}); 
+      .populate({ path: "sender", select: "fullName email" })
+      .populate({
+        path: "animal",
+        populate: { path: "specification", select: "_id name" },
+      });
     res.json(Requests); //status(200)
   } catch (error) {
     res.json(error); //status(500)

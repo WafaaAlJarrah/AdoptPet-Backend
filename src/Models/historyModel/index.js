@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 
 const historiesSchema = new Schema(
   {
-    status: String, //accepted or rejected
+    status: { type: String, required: true }, //accepted or rejected
     // historyDate: Date,
     requestInfo: { type: Schema.Types.ObjectId, ref: "Request" },
     // requestId: ObjectId,
