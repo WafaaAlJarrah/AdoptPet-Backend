@@ -6,9 +6,9 @@ export const addRequest = async (req, res) => {
   const newRequest = new Request(req.body);
   try {
     await newRequest.save();
-    res.json("Request added successfully!"); //status(200)
+    res.status(200).json(newRequest);
   } catch (error) {
-    res.json(error); //status(500)
+    res.status(500).json(error); 
   }
 };
 
@@ -21,9 +21,9 @@ export const getRequests = async (req, res) => {
         path: "animal",
         populate: { path: "specification", select: "_id name" },
       });
-    res.json(Requests); //status(200)
+    res.status(200).json(Requests); 
   } catch (error) {
-    res.json(error); //status(500)
+    res.status(500).json(error);
   }
 };
 
@@ -38,7 +38,7 @@ export const archiveRequest = async (req, res) => {
     }
     archivedRequest.archived = true;
     await archivedRequest.save();
-    res.status(200).json("Request archieved successfully"); //status(200)
+    res.status(200).json("Request archieved successfully");
   } catch (error) {
     res.status(500).json(error); //status(500)
   }
