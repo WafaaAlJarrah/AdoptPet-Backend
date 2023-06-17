@@ -5,7 +5,7 @@ const usersSchema = new Schema(
     fullName: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    phoneNB: Number,
+    phoneNB: { type: Number, required: true },
     isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }

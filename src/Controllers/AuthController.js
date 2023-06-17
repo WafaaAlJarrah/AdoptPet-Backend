@@ -15,7 +15,7 @@ export const registerUser = async (req, res) => {
   try {
     const oldUser = await User.findOne({ email: email });
     if (oldUser) {
-      return res.status(400).json({ message: "Email already registered!!" });
+      return res.status(400).json({ message: "Email already registered!" });
     }
 
     // create reusable transporter object using the default SMTP transport
@@ -54,14 +54,12 @@ export const registerUser = async (req, res) => {
           msg: "you should receive an email",
           info: info.messageId,
           preview: nodemailer.getTestMessageUrl(info),
-          newUser: newUser,
+          user: newUser,
           token: token,
         });
       })
       .catch((error) => {
-        return res
-          .status(500)
-          .json({ message: "ERROR from transporter: ", error });
+        return res.status(500).json({ message: "error from transporter: "+ error.message });//hayda ma lzm ybayen 3l user
         // if you have tihs error try this way :
         //1. Go to your Google account at https://myaccount.google.com/
         //2. Go to Security
@@ -70,7 +68,7 @@ export const registerUser = async (req, res) => {
         //and now generate a new password that you can use it in your code with the your Mail (* your google account)
       });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "parent's error: " + error.message }); //hayda ma lzm ybayen 3l user
   }
 };
 
@@ -84,7 +82,7 @@ export const loginUser = async (req, res) => {
       const validity = await bcrypt.compare(password, user.password);
 
       if (!validity) {
-        res.status(400).json("Wrong Password");
+        res.status(400).json("Wrong Password!");
       } else {
         const token = Jwt.sign(
           {
@@ -94,7 +92,7 @@ export const loginUser = async (req, res) => {
           "MERN",
           { expiresIn: "1h" }
         );
-        res.status(200).json("User logged in");
+        res.status(200).json({ user, token });
       }
     } else {
       res.status(404).json("User doesn't exists!");
