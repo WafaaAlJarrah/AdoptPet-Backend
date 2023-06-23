@@ -27,6 +27,16 @@ export const getHistories = async (req, res) => {
         populate: {
           path: "animal",
         },
+      })
+      .populate({
+        path: "requestInfo",
+        populate: {
+          path: "animal",
+          populate: {
+            path: "specification",
+            select: "name",
+          },
+        },
       });
     res.json(histories); //status(200)
   } catch (error) {
